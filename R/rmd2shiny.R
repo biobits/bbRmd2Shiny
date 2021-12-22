@@ -1,6 +1,6 @@
 
 
-#' Run a shiny application asking for parameter configuration for the given rmd document.
+#' A shiny runtime for parametrized r markdown reports.
 #'
 #' @param file Path to the R Markdown document with configurable parameters.
 #' @param params A named list of optional parameter overrides used in place of the document defaults.
@@ -26,7 +26,8 @@ knit_rmd_to_shiny <- function(file = NULL,
                             shiny_args = NULL,
                             save_caption = "Save",
                             run_caption ="Run Report",
-                            encoding = "UTF-8") {
+                            encoding = "UTF-8",
+                            defaultlogo="UCCH_Front.png") {
   
 
   if (is.null(file)) {
@@ -69,10 +70,10 @@ knit_rmd_to_shiny <- function(file = NULL,
   
   server <- function(input, output, session) {
     
-    # if(!is.null(report_note)){
-    # showNotification(paste(report_note), duration = 0)
-    # }
-    display_report_note(report_note)
+     if(!is.null(report_note)){
+      display_report_note(report_note)
+     }
+    
     # Initial Load of html if present otherwise display_Report shows logo
     #ToD:o If a pdf is present display this if there is no html report
     htmlfile<-paste0(tools::file_path_sans_ext(file),".html")
@@ -242,7 +243,7 @@ knit_rmd_to_shiny <- function(file = NULL,
                         ,params = values
                         ,envir = new.env(parent = globalenv())
                         ,output_dir = "www")
-       finalreport<-display_Report(reportfile = htmlfile)
+       finalreport<-display_Report(reportfile = htmlfile,defaultlogo=defaultlogo)
        
       removeModal()
       output$inc<-renderUI({finalreport})
@@ -289,6 +290,9 @@ knit_rmd_to_shiny <- function(file = NULL,
 }
 @-webkit-keyframes spin {
   to { -webkit-transform: rotate(360deg); }
+}
+@-ms-keyframes spin {
+  to { -ms-transform: rotate(360deg); }
 }"
   )
 

@@ -2,11 +2,11 @@
 % Please edit documentation in R/rmd2shiny.R
 \name{knit_rmd_to_shiny}
 \alias{knit_rmd_to_shiny}
-\title{Run a shiny application asking for parameter configuration for the given rmd document.}
+\title{A shiny runtime for parametrized r markdown reports.}
 \usage{
 knit_rmd_to_shiny(file = NULL, params = NULL, shiny_args = NULL,
   save_caption = "Save", run_caption = "Run Report",
-  encoding = "UTF-8")
+  encoding = "UTF-8", defaultlogo = "UCCH_Front.png")
 }
 \arguments{
 \item{file}{Path to the R Markdown document with configurable parameters.}
